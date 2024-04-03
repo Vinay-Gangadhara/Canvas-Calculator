@@ -1,0 +1,75 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class DemoStreams {
+    public static void main(String[] args) {
+        demo();
+    }
+
+    public static void demo() {
+        List<MyItem> items = new ArrayList<>();
+        items.add(new MyItem(3, "Item C", 15.99));
+        items.add(new MyItem(1, "Item A", 10.99));
+        items.add(new MyItem(2, "Item B", 12.99));
+
+        System.out.println("Original List of MyItem objects:");
+        items.forEach(System.out::println);
+
+        // Sort by ID using Stream API
+        List<MyItem> sortedById = items.stream()
+                .sorted(Comparator.comparingInt(MyItem::getId))
+                .collect(Collectors.toList());
+
+        System.out.println("\nSorted by ID:");
+        sortedById.forEach(System.out::println);
+
+        // Sort by Price using Stream API
+        List<MyItem> sortedByPrice = items.stream()
+                .sorted(Comparator.comparingDouble(MyItem::getPrice))
+                .collect(Collectors.toList());
+
+        System.out.println("\nSorted by Price:");
+        sortedByPrice.forEach(System.out::println);
+
+        // Sort by Name using Stream API
+        List<MyItem> sortedByName = items.stream()
+                .sorted(Comparator.comparing(MyItem::getName))
+                .collect(Collectors.toList());
+
+        System.out.println("\nSorted by Name:");
+        sortedByName.forEach(System.out::println);
+    }
+
+    public static class MyItem {
+        private int id;
+        private String name;
+        private double price;
+
+        public MyItem(int id, String name, double price) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        @Override
+        public String toString() {
+            return "MyItem{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", price=" + price +
+                    '}';
+        }
+    }
+}
